@@ -1,0 +1,1 @@
+# image-resizing-Lambda-function
