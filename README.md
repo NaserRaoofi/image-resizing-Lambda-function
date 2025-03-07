@@ -13,41 +13,6 @@ This AWS Lambda function automatically resizes images uploaded to an S3 bucket. 
 - **Optimized Processing**: Uses AWS Lambda layers for dependency management.
 - **Scalable & Cost-Efficient**: Executes only when triggered, reducing costs.
 
-## **Prerequisites**
-- AWS Account
-- IAM Role with S3 permissions
-- Pillow Python package (added as a Lambda Layer)
-
-## **AWS Lambda Setup**
-### **1. Handler Configuration**
-In the AWS Lambda function settings, set the **Handler** to:
-```plaintext
-Imageresizing.lambda_handler
-```
-The function entry point is the `lambda_handler` function inside the `Imageresizing.py` script.
-
-### **2. S3 Bucket Configuration**
-- **Source Bucket**: The bucket where original images are uploaded.
-- **Destination Bucket**: The bucket where resized images will be stored.
-
-Modify the `DESTINATION_BUCKET` variable in `Imageresizing.py` accordingly:
-```python
-DESTINATION_BUCKET = "output-s-v1"
-```
-
-### **3. Adding a Lambda Layer for Pillow**
-Since AWS Lambda doesn’t include **Pillow** by default, you need to add a **Lambda Layer** for Pillow.
-
-#### **Prebuilt AWS Lambda Layer for Pillow (Python 3.9)**
-Use the following **ARN** (change the region if necessary):
-```plaintext
-arn:aws:lambda:<your-region>:770693421928:layer:Klayers-p39-pillow:1
-```
-#### **Steps to Add a Layer**
-1. Go to your AWS Lambda function.
-2. Scroll down to **Layers** → Click **Add a Layer**.
-3. Choose **Specify an ARN** and paste the ARN above.
-4. Click **Add**.
 
 ### **4. IAM Permissions**
 Ensure your Lambda execution role has permissions to:
@@ -74,8 +39,7 @@ zip -r lambda_function_payload.zip Imageresizing.py
 ```
 2. **Upload the ZIP to AWS Lambda**.
 3. **Set the correct handler (`Imageresizing.lambda_handler`)**.
-4. **Attach the Pillow Lambda Layer**.
-5. **Test the function by uploading an image to the S3 source bucket**.
+4. **Test the function by uploading an image to the S3 source bucket**.
 
 ## **Testing the Function**
 Upload an image to your **source S3 bucket**, then check your **destination S3 bucket** for the resized image.
@@ -91,6 +55,8 @@ Upload an image to your **source S3 bucket**, then check your **destination S3 b
 
 3. **S3 Permission Denied**
    - Check the **IAM Role permissions** to ensure Lambda can access the S3 buckets.
+   - 
+4. ** Set the correct handler (`Imageresizing.lambda_handler`)
 
 ## **Conclusion**
 This function automates image resizing on AWS, making it easy to process images dynamically. Ensure the correct **handler configuration, IAM permissions, and Lambda Layer for Pillow** to avoid errors.
